@@ -1,0 +1,124 @@
+<div class="login-page">
+  <div class="login-brand">
+    <span class="brand-icon">K</span>
+    <span>Kesham<span class="brand-highlight">Profiles</span></span>
+  </div>
+
+  <main class="login-layout">
+    <section class="login-intro">
+      <div class="eyebrow">
+        <span class="status-dot"></span>
+        PERSONAL PROFILE MANAGEMENT
+      </div>
+
+      <h1>Your career.<br />Your <span>story.</span></h1>
+
+      <p>
+        Manage your professional profile, projects, resume and documents
+        from one secure workspace.
+      </p>
+
+      <div class="feature-list">
+        <div>
+          <span class="feature-icon">01</span>
+          <span>
+            <strong>Professional profile</strong>
+            <small>Keep your career information updated.</small>
+          </span>
+        </div>
+
+        <div>
+          <span class="feature-icon">02</span>
+          <span>
+            <strong>Projects and achievements</strong>
+            <small>Show recruiters your best work.</small>
+          </span>
+        </div>
+
+        <div>
+          <span class="feature-icon">03</span>
+          <span>
+            <strong>Private document storage</strong>
+            <small>Manage documents in your account.</small>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <section class="login-card">
+      <div class="card-icon">↗</div>
+
+      <p class="card-eyebrow">ADMIN WORKSPACE</p>
+      <h2>Welcome back</h2>
+      <p class="card-description">
+        Sign in to manage your professional portfolio.
+      </p>
+
+      <form (ngSubmit)="onLogin()" #loginForm="ngForm">
+        <div class="form-field">
+          <label for="email">Email address</label>
+          <input
+            id="email"
+            type="email"
+            name="email"
+            [(ngModel)]="email"
+            placeholder="you@example.com"
+            autocomplete="username"
+            required
+            email
+          />
+        </div>
+
+        <div class="form-field">
+          <div class="password-label">
+            <label for="password">Password</label>
+            <button
+              type="button"
+              class="show-password"
+              (click)="showPassword = !showPassword"
+            >
+              {{ showPassword ? 'Hide' : 'Show' }}
+            </button>
+          </div>
+
+          <input
+            id="password"
+            [type]="showPassword ? 'text' : 'password'"
+            name="password"
+            [(ngModel)]="password"
+            placeholder="Enter your password"
+            autocomplete="current-password"
+            required
+          />
+        </div>
+
+        <div class="error-message" *ngIf="errorMessage" role="alert">
+          {{ errorMessage }}
+        </div>
+
+        <button
+          type="submit"
+          class="login-button"
+          [disabled]="loading || loginForm.invalid"
+        >
+          {{ loading ? 'Signing in...' : 'Sign in to dashboard' }}
+          <span *ngIf="!loading">→</span>
+        </button>
+      </form>
+
+      <div class="secure-note">
+        <span>▣</span>
+        Secure administrator access
+      </div>
+
+      <div class="public-link">
+        Are you a recruiter or visitor?
+        <a routerLink="/keshav-dubey">View public portfolio →</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="login-footer">
+    © {{ currentYear }} KeshamProfiles · Professional profile management
+  </footer>
+</div>

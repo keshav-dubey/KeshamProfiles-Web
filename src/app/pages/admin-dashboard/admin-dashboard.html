@@ -1,0 +1,36 @@
+<div class="dashboard">
+  <header class="dashboard-header">
+    <div>
+      <h1>KeshamProfiles Admin</h1>
+      <p>Welcome, {{ userName }}</p>
+    </div>
+
+    <button type="button" (click)="logout()">Logout</button>
+  </header>
+
+  <main class="dashboard-content">
+    <h2>Manage your professional profile</h2>
+
+    <div class="dashboard-grid">
+      <a routerLink="/admin/profile" class="dashboard-card">
+        <h3>My Profile</h3>
+        <p>Manage your professional details.</p>
+      </a>
+
+      <a routerLink="/admin/projects" class="dashboard-card">
+        <h3>Projects</h3>
+        <p>Manage projects displayed to recruiters.</p>
+      </a>
+
+      <a routerLink="/admin/documents" class="dashboard-card">
+        <h3>Documents</h3>
+        <p>Manage resumes and private documents.</p>
+      </a>
+
+      <a routerLink="/keshav-dubey" class="dashboard-card">
+        <h3>Public Portfolio</h3>
+        <p>Preview your recruiter-facing page.</p>
+      </a>
+    </div>
+  </main>
+</div>

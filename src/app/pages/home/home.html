@@ -1,0 +1,497 @@
+
+<div class="portfolio-page">
+  <header class="navbar">
+    <a class="brand" routerLink="/keshav-dubey" aria-label="KeshamProfiles home">
+      Kesham<span>Profiles</span>
+    </a>
+
+    <nav class="nav-links" aria-label="Main navigation">
+      <a class="active" href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="nav-actions">
+      @if (profile(); as p) {
+        @if (p.resumeUrl) {
+          <a class="button button-outline resume-button"
+             [href]="p.resumeUrl"
+             target="_blank"
+             rel="noopener noreferrer">
+            <span aria-hidden="true">↓</span> Download Resume
+          </a>
+        }
+
+        <a class="button button-primary nav-connect" href="#contact">
+          Let's Connect <span aria-hidden="true">↗</span>
+        </a>
+      }
+    </div>
+  </header>
+
+  @if (loading()) {
+    <section class="status-section">
+      <div class="loader"></div>
+      <h2>Preparing my portfolio</h2>
+      <p>Loading professional profile...</p>
+    </section>
+  } @else if (profileError()) {
+    <section class="status-section">
+      <h2>Profile unavailable</h2>
+      <p>{{ profileError() }}</p>
+      <p>Check that the API is running and your profile is published.</p>
+    </section>
+  } @else if (profile(); as p) {
+    <main>
+      <!-- HERO -->
+      <section class="hero" id="home">
+        <div class="hero-content">
+          <div class="eyebrow">
+            <span class="status-dot"></span>
+            AVAILABLE FOR OPPORTUNITIES
+          </div>
+
+          <p class="intro-label">HELLO, I'M</p>
+
+          <h1>{{ p.fullName }}<span class="name-accent">.</span></h1>
+
+          <h2 class="hero-title">
+            {{ p.professionalTitle || 'Senior Software Developer | .NET Full Stack' }}
+          </h2>
+
+          <p class="hero-description">
+            {{ p.shortBio || 'Passionate software developer building scalable web applications with .NET, Angular, SQL Server and modern technologies.' }}
+          </p>
+
+          <div class="hero-actions">
+            @if (p.linkedInUrl) {
+              <a class="button button-primary"
+                 [href]="p.linkedInUrl"
+                 target="_blank"
+                 rel="noopener noreferrer">
+                <span class="button-icon">in</span>
+                Connect on LinkedIn <span aria-hidden="true">→</span>
+              </a>
+            }
+
+            @if (p.gitHubUrl) {
+              <a class="button button-outline"
+                 [href]="p.gitHubUrl"
+                 target="_blank"
+                 rel="noopener noreferrer">
+                <span class="github-icon">◉</span>
+                GitHub <span aria-hidden="true">→</span>
+              </a>
+            }
+
+            @if (p.email) {
+              <a class="button button-outline" [href]="'mailto:' + p.email">
+                <span aria-hidden="true">✉</span>
+                Email Me <span aria-hidden="true">→</span>
+              </a>
+            }
+          </div>
+
+          <div class="profile-facts">
+            <article class="fact-card">
+              <span class="fact-icon purple-icon">⌖</span>
+              <div>
+                <span class="fact-label">Location</span>
+                <strong>{{ p.location || 'India' }}</strong>
+              </div>
+            </article>
+
+            <article class="fact-card">
+              <span class="fact-icon purple-icon">▣</span>
+              <div>
+                <span class="fact-label">Experience</span>
+                <strong>3.8+ Years</strong>
+              </div>
+            </article>
+
+            <article class="fact-card">
+              <span class="fact-icon blue-icon">♧</span>
+              <div>
+                <span class="fact-label">Role</span>
+                <strong>Software Developer</strong>
+              </div>
+            </article>
+
+            <article class="fact-card">
+              <span class="fact-icon yellow-icon">ϟ</span>
+              <div>
+                <span class="fact-label">Career</span>
+                <strong>Open to Opportunities</strong>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- PROFILE PHOTO AND TECHNOLOGY BADGES -->
+        <div class="hero-visual">
+          <div class="orbit orbit-one"></div>
+          <div class="orbit orbit-two"></div>
+          <div class="orbit orbit-three"></div>
+
+          <span class="orbit-dot dot-one"></span>
+          <span class="orbit-dot dot-two"></span>
+          <span class="orbit-dot dot-three"></span>
+
+          <div class="portrait-frame">
+            <img
+              class="profile-image"
+              [src]="p.profileImageUrl || '/images/keshavImage.jpeg'"
+              [alt]="p.fullName + ' profile photo'"
+              (error)="$any($event.target).src='/images/keshavImage.jpeg'"
+            />
+          </div>
+
+          <div class="floating-tech tech-dotnet">
+            <span class="mini-logo dotnet-logo">.N</span>
+            <span><strong>.NET</strong><small>Backend</small></span>
+          </div>
+
+          <div class="floating-tech tech-angular">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/angular/angular-original.svg" alt="" />
+            <span><strong>Angular</strong><small>Frontend</small></span>
+          </div>
+
+          <div class="floating-tech tech-sql">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/microsoftsqlserver/microsoftsqlserver-original.svg" alt="" />
+            <span><strong>SQL Server</strong><small>Database</small></span>
+          </div>
+
+          <div class="floating-tech tech-azure">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/azure/azure-original.svg" alt="" />
+            <span><strong>Azure</strong><small>Cloud</small></span>
+          </div>
+
+          <div class="floating-tech tech-react">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" alt="" />
+            <span><strong>React</strong><small>UI</small></span>
+          </div>
+
+          <div class="floating-tech tech-typescript">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg" alt="" />
+            <span><strong>TypeScript</strong><small>Development</small></span>
+          </div>
+
+          <div class="code-card">
+<span class="code-symbol">{{ '{' }} {{ '}' }}</span>
+            <div>
+              <strong>Clean Code</strong>
+              <span>Scalable Solutions</span>
+              <span>Modern Technologies</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ABOUT -->
+      <section class="content-panel about-panel" id="about">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">01 / ABOUT ME</p>
+            <h2>Building useful things with <span>code.</span></h2>
+          </div>
+
+          <p class="section-subtitle">
+            Full-stack development focused on reliable, maintainable applications.
+          </p>
+        </div>
+
+        <div class="about-grid">
+          <article class="info-card">
+            <span class="info-icon purple-icon">01</span>
+            <h3>Backend Engineering</h3>
+            <p>Developing .NET APIs, application services, authentication and business logic.</p>
+          </article>
+
+          <article class="info-card">
+            <span class="info-icon blue-icon">02</span>
+            <h3>Modern Frontend</h3>
+            <p>Building responsive interfaces with Angular, TypeScript and modern web technologies.</p>
+          </article>
+
+          <article class="info-card">
+            <span class="info-icon cyan-icon">03</span>
+            <h3>Database Solutions</h3>
+            <p>Working with SQL Server, stored procedures, query optimization and relational data.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- SKILLS -->
+      <section class="content-panel skills-panel" id="skills">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">02 / SKILLS</p>
+            <h2>Technical <span>Skills</span></h2>
+          </div>
+
+          <p class="section-subtitle">
+            Technologies and tools I work with to build modern applications.
+          </p>
+        </div>
+
+        <div class="skills-grid">
+          <article class="skill-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/dotnetcore/dotnetcore-original.svg" alt=".NET" loading="lazy" />
+            <span>.NET</span>
+          </article>
+
+          <article class="skill-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg" alt="C#" loading="lazy" />
+            <span>C#</span>
+          </article>
+
+          <article class="skill-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/dotnetcore/dotnetcore-original.svg" alt="ASP.NET Core" loading="lazy" />
+            <span>ASP.NET Core</span>
+          </article>
+
+          <article class="skill-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/angular/angular-original.svg" alt="Angular" loading="lazy" />
+            <span>Angular</span>
+          </article>
+
+          <article class="skill-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" alt="React" loading="lazy" />
+            <span>React</span>
+          </article>
+
+          <article class="skill-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg" alt="TypeScript" loading="lazy" />
+            <span>TypeScript</span>
+          </article>
+
+          <article class="skill-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" alt="JavaScript" loading="lazy" />
+            <span>JavaScript</span>
+          </article>
+
+          <article class="skill-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/microsoftsqlserver/microsoftsqlserver-original.svg" alt="SQL Server" loading="lazy" />
+            <span>SQL Server</span>
+          </article>
+
+          <article class="skill-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" alt="HTML5" loading="lazy" />
+            <span>HTML5</span>
+          </article>
+
+          <article class="skill-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" alt="CSS3" loading="lazy" />
+            <span>CSS3</span>
+          </article>
+
+          <article class="skill-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bootstrap/bootstrap-original.svg" alt="Bootstrap" loading="lazy" />
+            <span>Bootstrap</span>
+          </article>
+
+          <article class="skill-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/azure/azure-original.svg" alt="Azure" loading="lazy" />
+            <span>Azure</span>
+          </article>
+
+          <article class="skill-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" alt="Git" loading="lazy" />
+            <span>Git</span>
+          </article>
+
+          <article class="skill-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg" alt="GitHub" loading="lazy" />
+            <span>GitHub</span>
+          </article>
+
+          <article class="skill-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-original.svg" alt="Postman" loading="lazy" />
+            <span>Postman</span>
+          </article>
+
+          <article class="skill-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/visualstudio/visualstudio-original.svg" alt="Visual Studio" loading="lazy" />
+            <span>Visual Studio</span>
+          </article>
+
+          <article class="skill-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg" alt="VS Code" loading="lazy" />
+            <span>VS Code</span>
+          </article>
+
+          <article class="skill-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jquery/jquery-original.svg" alt="jQuery" loading="lazy" />
+            <span>jQuery</span>
+          </article>
+
+          <article class="skill-card skill-text-icon">
+            <span class="api-logo">API</span>
+            <span>REST APIs</span>
+          </article>
+
+          <article class="skill-card skill-text-icon">
+            <span class="agile-logo">↻</span>
+            <span>Agile</span>
+          </article>
+
+          <article class="skill-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg" alt="Figma" loading="lazy" />
+            <span>Figma</span>
+          </article>
+
+          <article class="skill-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" alt="Docker" loading="lazy" />
+            <span>Docker</span>
+          </article>
+        </div>
+      </section>
+
+      <!-- PROJECTS -->
+      <section class="content-panel projects-panel" id="projects">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">03 / PROJECTS</p>
+            <h2>Featured <span>Projects</span></h2>
+          </div>
+
+          <p class="section-subtitle">
+            A selection of applications and solutions I have worked on.
+          </p>
+        </div>
+
+        @if (projects().length > 0) {
+          <div class="projects-grid">
+            @for (project of projects(); track project.projectId) {
+              <article class="project-card">
+                <div class="project-media">
+                  @if (project.imageUrl) {
+                    <img
+                      class="project-image"
+                      [src]="project.imageUrl"
+                      [alt]="project.title"
+                      loading="lazy"
+                    />
+                  } @else {
+                    <div class="project-image project-image-placeholder">
+                      <span class="placeholder-mark">KP</span>
+                      <span>{{ project.title }}</span>
+                    </div>
+                  }
+                </div>
+
+                <div class="project-body">
+                  <div class="project-title-row">
+                    <h3>{{ project.title }}</h3>
+                    <span class="featured-label">FEATURED</span>
+                  </div>
+
+                  <p class="project-description">
+                    {{ project.shortDescription || project.description }}
+                  </p>
+
+                  @if (getTechnologies(project).length > 0) {
+                    <div class="project-tags">
+                      @for (tech of getTechnologies(project); track tech) {
+                        <span>{{ tech }}</span>
+                      }
+                    </div>
+                  }
+
+                  <div class="project-links">
+                    @if (project.liveDemoUrl) {
+                      <a
+                        class="project-demo"
+                        [href]="project.liveDemoUrl"
+                        target="_blank"
+                        rel="noopener noreferrer">
+                        Live Demo <span aria-hidden="true">↗</span>
+                      </a>
+                    }
+
+                    @if (project.gitHubUrl) {
+                      <a
+                        class="project-source"
+                        [href]="project.gitHubUrl"
+                        target="_blank"
+                        rel="noopener noreferrer">
+                        <span aria-hidden="true">◉</span> GitHub
+                      </a>
+                    }
+                  </div>
+                </div>
+              </article>
+            }
+          </div>
+        } @else {
+          <div class="empty-projects">
+            <h3>Projects coming soon</h3>
+            <p>Published projects will appear here when available.</p>
+          </div>
+        }
+      </section>
+
+      <!-- CONTACT -->
+      <section class="contact-panel" id="contact">
+        <div class="contact-copy">
+          <p class="section-kicker">04 / CONTACT</p>
+          <h2>Let's Work Together</h2>
+          <p>
+            Interested in working together? Feel free to reach out through my professional profiles.
+          </p>
+        </div>
+
+        <div class="contact-socials">
+          @if (p.linkedInUrl) {
+            <a class="social-circle"
+               [href]="p.linkedInUrl"
+               target="_blank"
+               rel="noopener noreferrer"
+               aria-label="LinkedIn">in</a>
+          }
+
+          @if (p.gitHubUrl) {
+            <a class="social-circle"
+               [href]="p.gitHubUrl"
+               target="_blank"
+               rel="noopener noreferrer"
+               aria-label="GitHub">◉</a>
+          }
+
+          @if (p.email) {
+            <a class="social-circle"
+               [href]="'mailto:' + p.email"
+               aria-label="Email">✉</a>
+          }
+
+          @if (p.naukriUrl) {
+            <a class="social-circle naukri-circle"
+               [href]="p.naukriUrl"
+               target="_blank"
+               rel="noopener noreferrer"
+               aria-label="Naukri">N</a>
+          }
+        </div>
+
+        @if (p.email) {
+          <a class="button button-primary contact-cta"
+             [href]="'mailto:' + p.email">
+            Get In Touch <span aria-hidden="true">→</span>
+          </a>
+        }   
+      </section>
+    </main>
+  }
+
+   <footer class="portfolio-footer">
+    <a class="brand" routerLink="/keshav-dubey">
+      Kesham<span>Profiles</span>
+    </a>
+
+    <p>Designed with care · © {{ currentYear }}</p>
+
+    <a class="back-top" href="#home">Back to top ↑</a>
+  </footer>
+</div>
