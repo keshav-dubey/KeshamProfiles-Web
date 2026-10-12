@@ -1,124 +1,205 @@
+```html
 <div class="login-page">
-  <div class="login-brand">
-    <span class="brand-icon">K</span>
-    <span>Kesham<span class="brand-highlight">Profiles</span></span>
+  <!-- Animated AI background -->
+  <div class="ai-background" aria-hidden="true">
+    <div class="ambient-glow glow-left"></div>
+    <div class="ambient-glow glow-right"></div>
+    <div class="ambient-glow glow-bottom"></div>
+
+    <div class="digital-grid"></div>
+    <div class="digital-floor"></div>
+
+    <div class="light-beam beam-one"></div>
+    <div class="light-beam beam-two"></div>
+    <div class="light-beam beam-three"></div>
+
+    <div class="light-orb orb-one"></div>
+    <div class="light-orb orb-two"></div>
+    <div class="light-orb orb-three"></div>
+    <div class="light-orb orb-four"></div>
+    <div class="light-orb orb-five"></div>
+    <div class="light-orb orb-six"></div>
+
+    <div class="data-stream stream-one"></div>
+    <div class="data-stream stream-two"></div>
+    <div class="data-stream stream-three"></div>
+    <div class="data-stream stream-four"></div>
+    <div class="data-stream stream-five"></div>
+    <div class="data-stream stream-six"></div>
+    <div class="data-stream stream-seven"></div>
+    <div class="data-stream stream-eight"></div>
+    <div class="data-stream stream-nine"></div>
+    <div class="data-stream stream-ten"></div>
+    <div class="data-stream stream-eleven"></div>
+    <div class="data-stream stream-twelve"></div>
+
+    <!-- Moving brand text at different positions -->
+    <div class="brand-ghost ghost-one">KeshamProfiles</div>
+    <div class="brand-ghost ghost-two">KeshamProfiles</div>
+    <div class="brand-ghost ghost-three">KeshamProfiles</div>
+    <div class="brand-ghost ghost-four">KeshamProfiles</div>
+
+    <div class="energy-ring ring-one"></div>
+    <div class="energy-ring ring-two"></div>
   </div>
 
-  <main class="login-layout">
-    <section class="login-intro">
-      <div class="eyebrow">
-        <span class="status-dot"></span>
-        PERSONAL PROFILE MANAGEMENT
-      </div>
+  <!-- Header -->
+  <header class="login-header">
+    <a class="brand" routerLink="/login" aria-label="KeshamProfiles">
+      <span class="brand-mark">K</span>
+      <span class="brand-name">
+        Kesham<span>Profiles</span>
+      </span>
+    </a>
 
-      <h1>Your career.<br />Your <span>story.</span></h1>
+    <a class="header-link" routerLink="/keshav-dubey">
+      Explore portfolio
+      <span aria-hidden="true">↗</span>
+    </a>
+  </header>
 
-      <p>
-        Manage your professional profile, projects, resume and documents
-        from one secure workspace.
-      </p>
-
-      <div class="feature-list">
-        <div>
-          <span class="feature-icon">01</span>
-          <span>
-            <strong>Professional profile</strong>
-            <small>Keep your career information updated.</small>
-          </span>
-        </div>
-
-        <div>
-          <span class="feature-icon">02</span>
-          <span>
-            <strong>Projects and achievements</strong>
-            <small>Show recruiters your best work.</small>
-          </span>
-        </div>
-
-        <div>
-          <span class="feature-icon">03</span>
-          <span>
-            <strong>Private document storage</strong>
-            <small>Manage documents in your account.</small>
-          </span>
-        </div>
-      </div>
-    </section>
-
+  <!-- Main login content -->
+  <main class="login-main">
     <section class="login-card">
-      <div class="card-icon">↗</div>
+      <div class="card-top-row">
+        <div class="card-icon" aria-hidden="true">↗</div>
 
-      <p class="card-eyebrow">ADMIN WORKSPACE</p>
-      <h2>Welcome back</h2>
-      <p class="card-description">
-        Sign in to manage your professional portfolio.
+        <div class="secure-label">
+          <span class="secure-dot"></span>
+          SECURE ACCESS
+        </div>
+      </div>
+
+      <div class="welcome-label">WELCOME BACK</div>
+
+      <h1 class="login-title">
+        Sign in to
+        <span class="title-brand">
+          Kesham<span>Profiles</span>
+        </span>
+      </h1>
+
+      <p class="login-description">
+        Access your profile, projects and personal document vault.
       </p>
 
       <form (ngSubmit)="onLogin()" #loginForm="ngForm">
         <div class="form-field">
           <label for="email">Email address</label>
-          <input
-            id="email"
-            type="email"
-            name="email"
-            [(ngModel)]="email"
-            placeholder="you@example.com"
-            autocomplete="username"
-            required
-            email
-          />
+
+          <div class="input-wrap">
+            <span class="input-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="3.5" y="5.5" width="17" height="13" rx="2"></rect>
+                <path d="m4.5 7 7.5 5.5L19.5 7"></path>
+              </svg>
+            </span>
+
+            <input
+              id="email"
+              name="email"
+              type="email"
+              [(ngModel)]="email"
+              placeholder="you@example.com"
+              autocomplete="username"
+              required
+            />
+          </div>
         </div>
 
         <div class="form-field">
-          <div class="password-label">
-            <label for="password">Password</label>
+          <label for="password">Password</label>
+
+          <div class="input-wrap">
+            <span class="input-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="5" y="10" width="14" height="11" rx="2"></rect>
+                <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+                <path d="M12 14v3"></path>
+              </svg>
+            </span>
+
+            <input
+              id="password"
+              name="password"
+              [type]="showPassword ? 'text' : 'password'"
+              [(ngModel)]="password"
+              placeholder="Enter your password"
+              autocomplete="current-password"
+              required
+            />
+
             <button
+              class="password-toggle"
               type="button"
-              class="show-password"
               (click)="showPassword = !showPassword"
+              [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
             >
               {{ showPassword ? 'Hide' : 'Show' }}
             </button>
           </div>
-
-          <input
-            id="password"
-            [type]="showPassword ? 'text' : 'password'"
-            name="password"
-            [(ngModel)]="password"
-            placeholder="Enter your password"
-            autocomplete="current-password"
-            required
-          />
         </div>
 
-        <div class="error-message" *ngIf="errorMessage" role="alert">
-          {{ errorMessage }}
-        </div>
+        @if (errorMessage) {
+          <div class="error-message" role="alert">
+            <span aria-hidden="true">!</span>
+            {{ errorMessage }}
+          </div>
+        }
 
         <button
+          class="sign-in-button"
           type="submit"
-          class="login-button"
-          [disabled]="loading || loginForm.invalid"
+          [disabled]="isLoading || !loginForm.valid"
         >
-          {{ loading ? 'Signing in...' : 'Sign in to dashboard' }}
-          <span *ngIf="!loading">→</span>
+          <span>
+            {{ isLoading ? 'Signing in...' : 'Sign in to dashboard' }}
+          </span>
+
+          @if (isLoading) {
+            <span class="button-spinner" aria-hidden="true"></span>
+          } @else {
+            <span class="button-arrow" aria-hidden="true">→</span>
+          }
         </button>
       </form>
 
-      <div class="secure-note">
-        <span>▣</span>
-        Secure administrator access
+      <div class="security-note">
+        <span class="security-shield" aria-hidden="true">◆</span>
+        Your account is protected by secure authentication.
       </div>
 
-      <div class="public-link">
-        Are you a recruiter or visitor?
-        <a routerLink="/keshav-dubey">View public portfolio →</a>
+      <div class="card-divider">
+        <span></span>
+        <small>OR</small>
+        <span></span>
       </div>
+
+      <div class="signup-prompt">
+        <span>New to KeshamProfiles?</span>
+        <a routerLink="/register">Create an account</a>
+      </div>
+
+      <a class="public-link" routerLink="/keshav-dubey">
+        <span class="public-icon" aria-hidden="true">↗</span>
+
+        <span class="public-copy">
+          <strong>Explore the public portfolio</strong>
+          <small>View projects and professional profile</small>
+        </span>
+
+        <span class="public-arrow" aria-hidden="true">→</span>
+      </a>
     </section>
   </main>
 
+  <!-- Footer -->
   <footer class="login-footer">
-    © {{ currentYear }} KeshamProfiles · Professional profile management
+    <span>© {{ currentYear }} <strong>KeshamProfiles</strong></span>
+
+    <span class="footer-status">
+      <span class="secure-dot"></span>
+      Professional identity, beautifully organized.
+    </span>
   </footer>
 </div>
