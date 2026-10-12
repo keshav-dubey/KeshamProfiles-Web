@@ -1,4 +1,5 @@
-import { Component, inject } from '@angular/core';
+
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -12,51 +13,80 @@ import { AuthService } from '../../services/auth';
   styleUrls: ['./login.scss']
 })
 export class Login {
-  private readonly authService = inject(AuthService);
-  private readonly router = inject(Router);
-  readonly currentYear = new Date().getFullYear();
-
+    currentYear = new Date().getFullYear();
   email = '';
   password = '';
-  loading = false;
-  errorMessage = '';
   showPassword = false;
+  isLoading = false;
+  errorMessage = '';
+
+  readonly columns = [
+    3, 7, 12, 17, 22, 27, 32, 37, 42, 47,
+    52, 57, 62, 67, 72, 77, 82, 87, 92, 97
+  ];
+
+  readonly particles = Array.from({ length: 28 }, (_, index) => ({
+    id: index,
+    left: (index * 37 + 11) % 98,
+    delay: -((index * 1.7) % 12),
+    duration: 7 + ((index * 3) % 8)
+  }));
+
+  constructor(
+    private readonly authService: AuthService,
+    private readonly router: Router
+  ) {}
+
+  togglePassword(): void {
+    this.showPassword = !this.showPassword;
+  }
 
   onLogin(): void {
     this.errorMessage = '';
 
     if (!this.email.trim() || !this.password) {
-      this.errorMessage = 'Please enter your email and password.';
+      this.errorMessage = 'Please enter your email address and password.';
       return;
     }
 
-    this.loading = true;
+    this.isLoading = true;
 
     this.authService.login({
       email: this.email.trim(),
       password: this.password
     }).subscribe({
-  next: (response) => {
-  if (response.role?.toLowerCase() !== 'admin') {
-    this.loading = false;
-    this.errorMessage =
-      'This account does not have administrator access.';
-    return;
-  }
+      next: (response: any) => {
+        this.isLoading = false;
 
-  this.authService.setSession(response);
-  this.loading = false;
-  this.router.navigate(['/admin']);
-},
-      error: (error) => {
-        console.error('Login API error:', error);
-        this.loading = false;
+        // Keep the application's existing session handling.
+        this.authService.setSession(response);
 
-        if (error.status === 401) {
-          this.errorMessage = 'Invalid email or password.';
+        const role = String(
+          response?.user?.role ??
+          response?.role ??
+          ''
+        ).toLowerCase();
+
+       if (role && role !== 'admin') {
+  this.errorMessage =
+    'This account does not have administrator access.';
+  return;
+}
+
+        void this.router.navigate(['/admin']);
+      },
+      error: (error: any) => {
+        this.isLoading = false;
+
+        if (error?.status === 401) {
+          this.errorMessage = 'Invalid email address or password.';
+        } else if (error?.status === 0) {
+          this.errorMessage =
+            'Unable to connect to the server. Please check that the API is running.';
         } else {
           this.errorMessage =
-            'Unable to sign in. Check the API connection and try again.';
+            error?.error?.message ||
+            'Sign in failed. Please try again.';
         }
       }
     });
