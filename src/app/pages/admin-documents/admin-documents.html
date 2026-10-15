@@ -1,0 +1,164 @@
+<!-- admin-documents.html -->
+<div class="tech-page">
+  <div class="tech-background" aria-hidden="true">
+    <div class="city-glow"></div>
+    <div class="skyline"></div>
+    <div class="data-lines lines-one"></div>
+    <div class="data-lines lines-two"></div>
+    <div class="data-lines lines-three"></div>
+    <div class="light-particles"></div>
+    <div class="horizon"></div>
+    <div class="floor-grid"></div>
+  </div>
+
+  <header class="topbar">
+    <a routerLink="/admin" class="brand">
+      <span class="brand-icon">K</span>
+      <span>Kesham<span class="brand-accent">Profiles</span></span>
+    </a>
+    <div class="top-actions">
+      <span class="system-status"><i></i> Workspace active</span>
+      <button class="logout-button" (click)="logout()">Logout ↗</button>
+    </div>
+  </header>
+
+  <main class="page-content">
+    <a routerLink="/admin" class="back-link">← Back to dashboard</a>
+
+    <section class="page-heading">
+      <div>
+        <div class="eyebrow"><span></span> PERSONAL WORKSPACE / DOCUMENTS</div>
+        <h1>Your documents.<br><span>One secure space.</span></h1>
+        <p class="heading-description">
+          Organize your resume, certificates and professional documents in one place.
+        </p>
+      </div>
+      <div class="ai-chip">
+        <span class="ai-spark">✳</span>
+        <span><strong>Smart workspace</strong><small>Organized for your career</small></span>
+      </div>
+    </section>
+
+    <section class="stats-grid">
+      <article class="stat-card">
+        <div class="stat-icon purple">▤</div>
+        <div><span>Total documents</span><strong>{{ documents.length }}</strong><small>In your workspace</small></div>
+      </article>
+      <article class="stat-card">
+        <div class="stat-icon blue">▧</div>
+        <div><span>Resumes</span><strong>{{ resumeCount }}</strong><small>Career documents</small></div>
+      </article>
+      <article class="stat-card">
+        <div class="stat-icon cyan">◇</div>
+        <div><span>Certificates</span><strong>{{ certificateCount }}</strong><small>Professional credentials</small></div>
+      </article>
+      <article class="stat-card">
+        <div class="stat-icon green">⬡</div>
+        <div><span>Private files</span><strong>{{ privateCount }}</strong><small>Not publicly accessible</small></div>
+      </article>
+    </section>
+
+    <div class="workspace-grid">
+      <section class="panel upload-panel">
+        <div class="panel-heading">
+          <div><span class="section-label">UPLOAD CENTER</span><h2>Add a document</h2><p>Add a file to your workspace.</p></div>
+          <span class="heading-icon">↑</span>
+        </div>
+
+        <div class="drop-zone" [class.drag-active]="dragActive"
+          (dragover)="onDragOver($event)" (dragleave)="onDragLeave()" (drop)="onDrop($event)">
+          <div class="upload-illustration">↑</div>
+          <h3>Drop your file here</h3>
+          <p>or browse your computer</p>
+          <label class="browse-button">
+            Browse files
+            <input type="file" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" (change)="onFileSelected($event)">
+          </label>
+          <small>PDF, DOC, DOCX, JPG or PNG · Maximum 10 MB</small>
+        </div>
+
+        <div class="field-group">
+          <label for="documentType">Document category</label>
+          <select id="documentType" [(ngModel)]="documentType">
+            <option value="Resume">Resume</option>
+            <option value="Certificate">Certificate</option>
+            <option value="Aadhaar">Aadhaar</option>
+            <option value="PAN">PAN</option>
+            <option value="DrivingLicence">Driving Licence</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        @if (selectedFile) {
+          <div class="selected-file">
+            <span class="file-icon">▤</span>
+            <div class="selected-file-info">
+              <strong>{{ selectedFile.name }}</strong>
+              <small>{{ (selectedFile.size / 1024 / 1024).toFixed(2) }} MB</small>
+            </div>
+            <button type="button" class="remove-file" (click)="clearSelectedFile()">✕</button>
+          </div>
+        }
+
+        @if (errorMessage) { <div class="message error-message">{{ errorMessage }}</div> }
+        @if (successMessage) { <div class="message success-message">{{ successMessage }}</div> }
+
+        <button type="button" class="primary-button upload-button"
+          [disabled]="!selectedFile || uploading" (click)="uploadDocument()">
+          {{ uploading ? 'Uploading...' : '↑ Upload document' }}
+        </button>
+
+        <div class="privacy-note">
+          <span>◇</span>
+          <p><strong>Privacy first</strong><br>Documents are private by default and aren't shown on your public portfolio.</p>
+        </div>
+      </section>
+
+      <section class="panel library-panel">
+        <div class="panel-heading">
+          <div><span class="section-label">YOUR LIBRARY</span><h2>Document collection</h2><p>Review your stored documents.</p></div>
+          <button type="button" class="icon-button" aria-label="Refresh documents" (click)="loadDocuments()">↻</button>
+        </div>
+
+        <div class="search-box">
+          <span>⌕</span>
+          <input type="search" placeholder="Search documents..." [(ngModel)]="searchTerm">
+        </div>
+
+        @if (loading) {
+          <div class="empty-state"><div class="loading-ring"></div><h3>Loading your library</h3><p>Retrieving your document list...</p></div>
+        } @else if (filteredDocuments.length === 0) {
+          <div class="empty-state">
+            <div class="empty-icon">▤</div>
+            <h3>{{ searchTerm ? 'No matching documents' : 'Your library is ready' }}</h3>
+            <p>{{ searchTerm ? 'Try another search term.' : 'Upload your first resume or certificate to get started.' }}</p>
+          </div>
+        } @else {
+          <div class="document-list">
+            @for (doc of filteredDocuments; track doc.documentId) {
+              <article class="document-row">
+                <div class="file-type-icon" [class.pdf]="doc.documentName.toLowerCase().endsWith('.pdf')">
+                  {{ doc.documentName.toLowerCase().endsWith('.pdf') ? 'PDF' : 'DOC' }}
+                </div>
+                <div class="document-info">
+                  <strong>{{ doc.documentName }}</strong>
+                  <span>{{ doc.documentType }} · {{ doc.uploadedAt | date:'dd MMM yyyy' }}</span>
+                </div>
+                <span class="privacy-badge">{{ doc.isPublic ? 'Public' : 'Private' }}</span>
+              </article>
+            }
+          </div>
+        }
+
+        <div class="library-footer">
+          <span><i></i> Your document list</span>
+          <span>{{ filteredDocuments.length }} item(s)</span>
+        </div>
+      </section>
+    </div>
+
+    <footer class="page-footer">
+      <span>KeshamProfiles · Personal workspace</span><span>Secure by design</span>
+    </footer>
+  </main>
+</div>

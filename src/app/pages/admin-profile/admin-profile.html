@@ -1,0 +1,192 @@
+<!-- admin-profile.html -->
+<div class="tech-page">
+  <div class="tech-background" aria-hidden="true">
+    <div class="city-glow"></div>
+    <div class="skyline"></div>
+    <div class="data-lines lines-one"></div>
+    <div class="data-lines lines-two"></div>
+    <div class="data-lines lines-three"></div>
+    <div class="light-particles"></div>
+    <div class="horizon"></div>
+    <div class="floor-grid"></div>
+  </div>
+
+  <header class="topbar">
+    <a routerLink="/admin" class="brand">
+      <span class="brand-icon">K</span>
+      <span>Kesham<span class="brand-accent">Profiles</span></span>
+    </a>
+    <div class="top-actions">
+      <span class="system-status"><i></i> Profile workspace</span>
+      <button type="button" class="logout-button" (click)="logout()">Logout ↗</button>
+    </div>
+  </header>
+
+  <main class="content">
+    <a routerLink="/admin" class="back-link">← Back to dashboard</a>
+
+    <section class="heading">
+      <div>
+        <div class="eyebrow"><span></span> PERSONAL BRAND / PROFILE SETTINGS</div>
+        <h1>Shape your<br><span>professional story.</span></h1>
+        <p>Keep your profile polished, current and ready for your next opportunity.</p>
+      </div>
+      <div class="profile-badge"><span>✳</span> Profile studio</div>
+    </section>
+
+    <div class="editor-layout">
+      <aside class="preview-card">
+        <div class="preview-cover">
+          <span class="cover-orb cover-orb-one"></span>
+          <span class="cover-orb cover-orb-two"></span>
+          <span class="cover-label">PROFESSIONAL PROFILE</span>
+        </div>
+
+        <div class="preview-body">
+          <div class="avatar">
+            @if (profile.profileImageUrl) {
+              <img [src]="profile.profileImageUrl" alt="Profile preview">
+            } @else {
+              <span>{{ profile.fullName ? profile.fullName.charAt(0).toUpperCase() : 'K' }}</span>
+            }
+          </div>
+
+          <span class="preview-kicker">YOUR PUBLIC IDENTITY</span>
+          <h2>{{ profile.fullName || 'Your name' }}</h2>
+          <p class="preview-title">{{ profile.professionalTitle || 'Your professional title' }}</p>
+          <p class="preview-bio">{{ profile.shortBio || 'Your professional introduction will appear here.' }}</p>
+
+          @if (profile.location) {
+            <div class="preview-location">⌖ {{ profile.location }}</div>
+          }
+
+          <div class="preview-divider"></div>
+          <div class="preview-link">
+            <span>Portfolio URL</span>
+            <strong>/{{ profile.profileSlug || 'your-profile' }}</strong>
+          </div>
+          <div class="preview-footer"><i></i> Preview updates as you edit</div>
+        </div>
+      </aside>
+
+      <section class="form-panel">
+        <div class="form-header">
+          <div>
+            <span class="section-label">PROFILE EDITOR</span>
+            <h2>Professional details</h2>
+            <p>Update the information recruiters see on your portfolio.</p>
+          </div>
+          <div class="edit-icon">✎</div>
+        </div>
+
+        @if (loading) {
+          <div class="loading-state"><div class="spinner"></div> Loading profile information...</div>
+        } @else {
+          <form (ngSubmit)="saveProfile()">
+            <section class="form-section">
+              <div class="section-heading">
+                <span class="section-number">01</span>
+                <div><h3>Basic information</h3><p>Your name and professional introduction.</p></div>
+              </div>
+
+              <div class="field-grid">
+                <div class="field">
+                  <label for="fullName">Full name *</label>
+                  <input id="fullName" name="fullName" required [(ngModel)]="profile.fullName" placeholder="Your full name">
+                </div>
+                <div class="field">
+                  <label for="professionalTitle">Professional title</label>
+                  <input id="professionalTitle" name="professionalTitle" [(ngModel)]="profile.professionalTitle" placeholder="Senior Software Developer">
+                </div>
+                <div class="field full-width">
+                  <label for="profileSlug">Public profile slug</label>
+                  <div class="slug-input">
+                    <span>/</span>
+                    <input id="profileSlug" name="profileSlug" [(ngModel)]="profile.profileSlug" placeholder="keshav-dubey">
+                  </div>
+                  <small>Changing this may affect your existing public portfolio URL.</small>
+                </div>
+                <div class="field full-width">
+                  <label for="shortBio">Professional summary</label>
+                  <textarea id="shortBio" name="shortBio" rows="4" maxlength="1000" [(ngModel)]="profile.shortBio" placeholder="Describe your experience, expertise and the problems you solve..."></textarea>
+                  <small>{{ profile.shortBio.length }} / 1000 characters</small>
+                </div>
+              </div>
+            </section>
+
+            <section class="form-section">
+              <div class="section-heading">
+                <span class="section-number">02</span>
+                <div><h3>Contact information</h3><p>Ways for recruiters to reach you.</p></div>
+              </div>
+
+              <div class="field-grid">
+                <div class="field">
+                  <label for="email">Email address</label>
+                  <input id="email" name="email" type="email" [(ngModel)]="profile.email" placeholder="you@example.com">
+                </div>
+                <div class="field">
+                  <label for="phone">Phone number</label>
+                  <input id="phone" name="phone" type="tel" [(ngModel)]="profile.phone" placeholder="Your contact number">
+                </div>
+                <div class="field full-width">
+                  <label for="location">Location</label>
+                  <input id="location" name="location" [(ngModel)]="profile.location" placeholder="City, State, India">
+                </div>
+              </div>
+            </section>
+
+            <section class="form-section">
+              <div class="section-heading">
+                <span class="section-number">03</span>
+                <div><h3>Online presence</h3><p>Link your professional profiles.</p></div>
+              </div>
+
+              <div class="field-grid">
+                <div class="field full-width">
+                  <label for="profileImageUrl">Profile image URL</label>
+                  <input id="profileImageUrl" name="profileImageUrl" type="url" [(ngModel)]="profile.profileImageUrl" placeholder="https://example.com/profile.jpg">
+                </div>
+                <div class="field full-width">
+                  <label for="resumeUrl">Resume URL</label>
+                  <input id="resumeUrl" name="resumeUrl" type="url" [(ngModel)]="profile.resumeUrl" placeholder="https://...">
+                </div>
+                <div class="field">
+                  <label for="gitHubUrl">GitHub</label>
+                  <input id="gitHubUrl" name="gitHubUrl" type="url" [(ngModel)]="profile.gitHubUrl" placeholder="https://github.com/username">
+                </div>
+                <div class="field">
+                  <label for="linkedInUrl">LinkedIn</label>
+                  <input id="linkedInUrl" name="linkedInUrl" type="url" [(ngModel)]="profile.linkedInUrl" placeholder="https://linkedin.com/in/username">
+                </div>
+                <div class="field full-width">
+                  <label for="naukriUrl">Naukri profile</label>
+                  <input id="naukriUrl" name="naukriUrl" type="url" [(ngModel)]="profile.naukriUrl" placeholder="https://www.naukri.com/...">
+                </div>
+              </div>
+            </section>
+
+            @if (errorMessage) {
+              <div class="form-message error">{{ errorMessage }}</div>
+            }
+            @if (successMessage) {
+              <div class="form-message success">{{ successMessage }}</div>
+            }
+
+            <div class="form-actions">
+              <a routerLink="/admin" class="cancel-button">Cancel</a>
+              <button class="save-button" type="submit" [disabled]="saving">
+                {{ saving ? 'Saving changes...' : '✓ Save profile changes' }}
+              </button>
+            </div>
+          </form>
+        }
+      </section>
+    </div>
+
+    <footer class="page-footer">
+      <span>KeshamProfiles · Profile studio</span>
+      <span>Built for your next opportunity</span>
+    </footer>
+  </main>
+</div>

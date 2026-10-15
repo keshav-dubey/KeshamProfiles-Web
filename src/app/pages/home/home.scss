@@ -2975,5 +2975,146 @@
     width: 100%;
     box-sizing: border-box;
   }
+
+  
+.project-title-link {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.project-title-link:hover {
+  color: #28dff2;
+}
+
+.project-image-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+.project-image-link .project-image {
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.project-image-link:hover .project-image {
+  transform: scale(1.03);
+}
+
+/* ===== Futuristic developer workspace background ===== */
+
+.portfolio-page {
+  position: relative;
+  isolation: isolate;
+  background: #030713;
+}
+
+.ambient-background {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 15% 15%, rgba(0, 116, 255, 0.24), transparent 36%),
+    radial-gradient(ellipse at 82% 25%, rgba(159, 40, 255, 0.24), transparent 38%),
+    linear-gradient(180deg, #030713, #070b1b 55%, #030713);
+}
+
+.ambient-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.3;
+  background-image:
+    linear-gradient(rgba(0, 205, 255, 0.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 205, 255, 0.15) 1px, transparent 1px);
+  background-size: 48px 48px;
+  animation: workspace-grid-move 20s linear infinite;
+}
+
+.ambient-orb {
+  position: absolute;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.4;
+  animation: workspace-orb-float 12s ease-in-out infinite alternate;
+}
+
+.ambient-orb-one {
+  top: 10%;
+  left: -100px;
+  background: #007dff;
+}
+
+.ambient-orb-two {
+  top: 20%;
+  right: -100px;
+  background: #812bff;
+  animation-delay: -4s;
+}
+
+.ambient-orb-three {
+  bottom: 5%;
+  left: 40%;
+  background: #00d9ff;
+  animation-delay: -7s;
+}
+
+.ambient-scan {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #00dfff, #8d5cff, transparent);
+  box-shadow: 0 0 20px #00dfff;
+  animation: workspace-scan 8s ease-in-out infinite alternate;
+}
+
+.ambient-scan-one { top: 30%; }
+.ambient-scan-two { top: 70%; animation-delay: -4s; }
+
+.ambient-particle {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #70f7ff;
+  box-shadow: 0 0 12px 3px rgba(0, 220, 255, 0.7);
+  animation: workspace-particle-float 6s ease-in-out infinite;
+}
+
+.particle-one { top: 12%; left: 20%; }
+.particle-two { top: 35%; left: 10%; animation-delay: -2s; }
+.particle-three { top: 18%; right: 20%; animation-delay: -3s; }
+.particle-four { top: 45%; right: 10%; animation-delay: -1s; }
+.particle-five { top: 65%; left: 35%; animation-delay: -4s; }
+.particle-six { top: 80%; right: 18%; animation-delay: -2s; }
+.particle-seven { top: 55%; left: 70%; animation-delay: -5s; }
+.particle-eight { top: 85%; left: 15%; animation-delay: -3s; }
+
+@keyframes workspace-grid-move {
+  to { background-position: 48px 48px; }
+}
+
+@keyframes workspace-orb-float {
+  from { transform: translate(0, 0) scale(0.9); }
+  to { transform: translate(40px, 25px) scale(1.1); }
+}
+
+@keyframes workspace-scan {
+  from { transform: translateY(-20px); opacity: 0.2; }
+  to { transform: translateY(25px); opacity: 0.8; }
+}
+
+@keyframes workspace-particle-float {
+  0%, 100% { transform: translateY(0); opacity: 0.4; }
+  50% { transform: translateY(-25px); opacity: 1; }
+}
+
 }
 

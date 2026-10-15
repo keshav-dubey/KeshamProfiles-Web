@@ -1,21 +1,26 @@
 <div class="portfolio-page" id="home">
   <!-- Animated decorative background; does not block links or form controls. -->
-  <div class="ambient-background" aria-hidden="true">
-    <span class="ambient-grid"></span>
-    <span class="ambient-scan ambient-scan-one"></span>
-    <span class="ambient-scan ambient-scan-two"></span>
-    <span class="ambient-orb ambient-orb-one"></span>
-    <span class="ambient-orb ambient-orb-two"></span>
-    <span class="ambient-orb ambient-orb-three"></span>
-    <span class="ambient-brand ambient-brand-one">KeshamProfiles</span>
-    <span class="ambient-brand ambient-brand-two">KeshamProfiles</span>
-    <span class="ambient-particle particle-one"></span>
-    <span class="ambient-particle particle-two"></span>
-    <span class="ambient-particle particle-three"></span>
-    <span class="ambient-particle particle-four"></span>
-    <span class="ambient-particle particle-five"></span>
-    <span class="ambient-particle particle-six"></span>
-  </div>
+  
+<div class="ambient-background" aria-hidden="true">
+  <div class="ambient-grid"></div>
+
+  <div class="ambient-orb ambient-orb-one"></div>
+  <div class="ambient-orb ambient-orb-two"></div>
+  <div class="ambient-orb ambient-orb-three"></div>
+
+  <div class="ambient-scan ambient-scan-one"></div>
+  <div class="ambient-scan ambient-scan-two"></div>
+
+  <span class="ambient-particle particle-one"></span>
+  <span class="ambient-particle particle-two"></span>
+  <span class="ambient-particle particle-three"></span>
+  <span class="ambient-particle particle-four"></span>
+  <span class="ambient-particle particle-five"></span>
+  <span class="ambient-particle particle-six"></span>
+  <span class="ambient-particle particle-seven"></span>
+  <span class="ambient-particle particle-eight"></span>
+</div>
+
 
   <!-- NAVBAR -->
 
@@ -35,7 +40,9 @@
 
       <a class="nav-link" href="#skills">Skills</a>
 
-      <a class="nav-link" href="#projects">Projects</a>\n\n      <a class="nav-link" href="#resume">Resume</a>
+      <a class="nav-link" href="#projects">Projects</a>
+      
+      <a class="nav-link" href="#resume">Resume</a>
 
       <a class="nav-link" href="#contact">Contact</a>
 
@@ -723,15 +730,29 @@
 
                   @if (getProjectImages(project).length > 0) {
 
-                    <img
+                  
+<a
+  class="project-image-link"
+  *ngIf="getProjectLiveUrl(project) as liveUrl"
+  [href]="liveUrl"
+  target="_blank"
+  rel="noopener noreferrer"
+  [attr.aria-label]="'Open ' + project.title + ' website'">
 
-                      class="project-image"
+  <img
+    class="project-image"
+    [src]="getProjectImages(project)[getProjectImageIndex(project)]"
+    [alt]="project.title + ' screenshot ' + (getProjectImageIndex(project) + 1)"
+    loading="lazy">
+</a>
 
-                      [src]="getProjectImages(project)[getProjectImageIndex(project)]"
+<img
+  *ngIf="!getProjectLiveUrl(project) && getProjectImages(project).length > 0"
+  class="project-image"
+  [src]="getProjectImages(project)[getProjectImageIndex(project)]"
+  [alt]="project.title + ' screenshot'"
+  loading="lazy">
 
-                      [alt]="project.title + ' screenshot ' + (getProjectImageIndex(project) + 1)"
-
-                      loading="lazy">
 
                     <div class="gallery-top">
 
@@ -829,13 +850,29 @@
 
                 <div class="project-body">
 
-                  <div class="project-title-row">
+                  
+<div class="project-title-row">
+  <h3>
+    <a
+      [href]="getProjectLiveUrl(project) || '#projects'"
+      [attr.target]="getProjectLiveUrl(project) ? '_blank' : null"
+      [attr.rel]="getProjectLiveUrl(project) ? 'noopener noreferrer' : null"
+      [class.project-title-link]="!!getProjectLiveUrl(project)">
+      {{ project.title }}
+    </a>
+  </h3>
 
-                    <h3>{{ project.title }}</h3>
+  <a
+    *ngIf="getProjectLiveUrl(project) as liveUrl"
+    class="project-arrow"
+    [href]="liveUrl"
+    target="_blank"
+    rel="noopener noreferrer"
+    [attr.aria-label]="'Open ' + project.title">
+    ↗
+  </a>
+</div>
 
-                    <span class="project-arrow" aria-hidden="true">↗</span>
-
-                  </div>
 
                   <p class="project-description">
 

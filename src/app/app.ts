@@ -9,7 +9,7 @@ import { ProjectService, Project } from './services/project';
   selector: 'app-root',
   imports: [CommonModule, RouterOutlet],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrls: ['./app.scss']
 })
 export class App implements OnInit {
   profile = signal<Profile | null>(null);

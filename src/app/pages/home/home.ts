@@ -54,16 +54,16 @@ export class Home implements OnInit, OnDestroy {
     hrms: [
       '/images/projects/hrms/Login.png',
       '/images/projects/hrms/dashboard.png',
-      '/images/projects/hrms/employees.png',
-      '/images/projects/hrms/attendance.png',
-      '/images/projects/hrms/reports.png'
+      '/images/projects/hrms/Reports.png',
+      '/images/projects/hrms/Employee.png',
+      '/images/projects/hrms/Leave.png'
     ],
     keshamprofiles: [
       '/images/projects/keshamprofiles/Login.png',
       '/images/projects/keshamprofiles/Public-Portfolio.png',
-      '/images/projects/keshamprofiles/profile-3.png',
-      '/images/projects/keshamprofiles/profile-4.png',
-      '/images/projects/keshamprofiles/profile-5.png'
+      '/images/projects/keshamprofiles/About.png',
+      '/images/projects/keshamprofiles/Skills.png',
+      '/images/projects/keshamprofiles/Projects.png'
     ]
   };
 
@@ -118,7 +118,7 @@ export class Home implements OnInit, OnDestroy {
   getTechnologies(project: Project): string[] {
     return (project.technologies ?? '')
       .split(',')
-      .map(item => item.trim())
+      .map((item: string) => item.trim())
       .filter(Boolean);
   }
 
@@ -161,4 +161,20 @@ export class Home implements OnInit, OnDestroy {
       [project.projectId]: index
     }));
   }
+
+  
+getProjectLiveUrl(project: Project): string | null {
+  const title = (project.title ?? '').toLowerCase();
+
+  if (title.includes('hrms')) {
+    return 'http://keshamhris.somee.com/';
+  }
+
+  if (title.includes('keshamprofiles')) {
+    return 'http://localhost:58338/keshav-dubey';
+  }
+
+  return project.liveDemoUrl || null;
+}
+
 }

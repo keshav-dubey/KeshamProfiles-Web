@@ -13,7 +13,8 @@ import { AuthService } from '../../services/auth';
   styleUrls: ['./login.scss']
 })
 export class Login {
-    currentYear = new Date().getFullYear();
+  readonly currentYear = new Date().getFullYear();
+
   email = '';
   password = '';
   showPassword = false;
@@ -45,7 +46,8 @@ export class Login {
     this.errorMessage = '';
 
     if (!this.email.trim() || !this.password) {
-      this.errorMessage = 'Please enter your email address and password.';
+      this.errorMessage =
+        'Please enter your email address and password.';
       return;
     }
 
@@ -55,40 +57,49 @@ export class Login {
       email: this.email.trim(),
       password: this.password
     }).subscribe({
-      next: (response: any) => {
-        this.isLoading = false;
+   
+next: (response: any) => {
+  console.log('Login response:', response);
 
-        // Keep the application's existing session handling.
-        this.authService.setSession(response);
+  this.isLoading = false;
 
-        const role = String(
-          response?.user?.role ??
-          response?.role ??
-          ''
-        ).toLowerCase();
+  try {
+    this.authService.setSession(response);
+    console.log('Session saved successfully');
 
-       if (role && role !== 'admin') {
-  this.errorMessage =
-    'This account does not have administrator access.';
-  return;
-}
+    const role = String(
+      response?.user?.role ??
+      response?.role ??
+      ''
+    ).trim().toLowerCase();
 
-        void this.router.navigate(['/admin']);
-      },
-      error: (error: any) => {
-        this.isLoading = false;
+    console.log('Detected role:', role);
 
-        if (error?.status === 401) {
-          this.errorMessage = 'Invalid email address or password.';
-        } else if (error?.status === 0) {
+    if (!['admin', 'administrator', 'superadmin'].includes(role)) {
+      this.errorMessage =
+        'This account does not have administrator access.';
+      return;
+    }
+
+    this.router.navigate(['/admin']).then(
+      navigated => {
+        console.log('Navigation successful:', navigated);
+        console.log('Current URL:', this.router.url);
+
+        if (!navigated) {
           this.errorMessage =
-            'Unable to connect to the server. Please check that the API is running.';
-        } else {
-          this.errorMessage =
-            error?.error?.message ||
-            'Sign in failed. Please try again.';
+            'Could not open the admin dashboard. Check the authentication guard.';
         }
+      },
+      error => {
+        console.error('Navigation error:', error);
+        this.errorMessage = 'Unable to open the admin dashboard.';
       }
-    });
+    );
+  } catch (error) {
+    console.error('Login session error:', error);
+    this.errorMessage = 'Unable to save your login session.';
   }
-}
+},
+    });
+  }}

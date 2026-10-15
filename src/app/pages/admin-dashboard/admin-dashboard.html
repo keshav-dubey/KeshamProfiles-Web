@@ -1,36 +1,154 @@
+
 <div class="dashboard">
   <header class="dashboard-header">
-    <div>
-      <h1>KeshamProfiles Admin</h1>
-      <p>Welcome, {{ userName }}</p>
-    </div>
+    <a routerLink="/admin" class="brand">
+      <span class="brand-logo">K</span>
+      <span>KeshamProfiles <span class="brand-muted">Admin</span></span>
+    </a>
 
-    <button type="button" (click)="logout()">Logout</button>
+    <div class="header-actions">
+      <a
+        routerLink="/keshav-dubey"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="preview-button">
+        <span>↗</span> View Portfolio
+      </a>
+
+      <button type="button" class="logout-button" (click)="logout()">
+        <span>↪</span> Logout
+      </button>
+    </div>
   </header>
 
   <main class="dashboard-content">
-    <h2>Manage your professional profile</h2>
+    <section class="welcome-section">
+      <div class="welcome-copy">
+        <div class="eyebrow">
+          <span class="status-dot"></span>
+          YOUR PERSONAL WORKSPACE
+        </div>
 
-    <div class="dashboard-grid">
-      <a routerLink="/admin/profile" class="dashboard-card">
+        <h1>Welcome back<span class="accent">.</span></h1>
+
+        <p>
+          Hello, {{ userName }}. Manage your professional identity,
+          projects, and documents from one place.
+        </p>
+      </div>
+
+      <div class="user-card">
+        <div class="user-avatar">KD</div>
+        <div class="user-details">
+          <strong>{{ userName }}</strong>
+          <span>Portfolio Administrator</span>
+        </div>
+        <span class="online-indicator"></span>
+      </div>
+    </section>
+
+    <section class="section-heading">
+      <div>
+        <h2>Manage your workspace</h2>
+        <p>Everything you need to maintain your professional portfolio.</p>
+      </div>
+
+      <span class="section-label">ADMIN PANEL</span>
+    </section>
+
+    <section class="dashboard-grid">
+      <a routerLink="/admin/profile" class="dashboard-card profile-card">
+        <div class="card-heading">
+          <div class="card-icon icon-purple">
+            <span>♙</span>
+          </div>
+          <span class="card-arrow">↗</span>
+        </div>
+
+        <span class="card-category">PERSONAL BRAND</span>
         <h3>My Profile</h3>
-        <p>Manage your professional details.</p>
+        <p>
+          Update your professional title, biography, contact details,
+          and social profile links.
+        </p>
+
+        <div class="card-footer">
+          <span>Manage profile</span>
+          <span class="footer-arrow">→</span>
+        </div>
       </a>
 
-      <a routerLink="/admin/projects" class="dashboard-card">
+      <a routerLink="/admin/projects" class="dashboard-card projects-card">
+        <div class="card-heading">
+          <div class="card-icon icon-blue">
+            <span>▣</span>
+          </div>
+          <span class="card-arrow">↗</span>
+        </div>
+
+        <span class="card-category">PORTFOLIO CONTENT</span>
         <h3>Projects</h3>
-        <p>Manage projects displayed to recruiters.</p>
+        <p>
+          Showcase your development work, technologies, GitHub repositories,
+          and live demos.
+        </p>
+
+        <div class="card-footer">
+          <span>Manage projects</span>
+          <span class="footer-arrow">→</span>
+        </div>
       </a>
 
-      <a routerLink="/admin/documents" class="dashboard-card">
+      <a routerLink="/admin/documents" class="dashboard-card documents-card">
+        <div class="card-heading">
+          <div class="card-icon icon-green">
+            <span>▤</span>
+          </div>
+          <span class="card-arrow">↗</span>
+        </div>
+
+        <span class="card-category">DOCUMENT LIBRARY</span>
         <h3>Documents</h3>
-        <p>Manage resumes and private documents.</p>
+        <p>
+          Organize your resumes and professional documents in one convenient
+          place.
+        </p>
+
+        <div class="card-footer">
+          <span>Manage documents</span>
+          <span class="footer-arrow">→</span>
+        </div>
       </a>
 
-      <a routerLink="/keshav-dubey" class="dashboard-card">
+      <a
+        routerLink="/keshav-dubey"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="dashboard-card portfolio-card">
+        <div class="card-heading">
+          <div class="card-icon icon-orange">
+            <span>◎</span>
+          </div>
+          <span class="card-arrow">↗</span>
+        </div>
+
+        <span class="card-category">PUBLIC WEBSITE</span>
         <h3>Public Portfolio</h3>
-        <p>Preview your recruiter-facing page.</p>
+        <p>
+          Preview the page recruiters see and check your published portfolio
+          content.
+        </p>
+
+        <div class="card-footer">
+          <span>View portfolio</span>
+          <span class="footer-arrow">→</span>
+        </div>
       </a>
-    </div>
+    </section>
+
+    <footer class="dashboard-footer">
+      <span>© {{ currentYear }} KeshamProfiles</span>
+      <span>Built for your professional journey.</span>
+    </footer>
   </main>
 </div>

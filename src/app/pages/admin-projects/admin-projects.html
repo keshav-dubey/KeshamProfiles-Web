@@ -1,0 +1,180 @@
+
+<div class="projects-page">
+  <header class="page-header">
+    <div>
+      <a routerLink="/admin" class="back-link">← Admin Dashboard</a>
+      <p class="eyebrow">PORTFOLIO MANAGEMENT</p>
+      <h1>My Projects</h1>
+      <p class="subtitle">Manage the projects displayed on your public profile.</p>
+    </div>
+
+    <button class="primary-button" (click)="addProject()">
+      + Add Project
+    </button>
+  </header>
+
+  @if (successMessage) {
+    <div class="alert success">{{ successMessage }}</div>
+  }
+
+  @if (errorMessage) {
+    <div class="alert error">{{ errorMessage }}</div>
+  }
+
+  @if (showForm) {
+    <section class="form-card">
+      <div class="form-heading">
+        <div>
+          <h2>{{ editingId === null ? 'Add New Project' : 'Edit Project' }}</h2>
+          <p>Enter the project details below.</p>
+        </div>
+        <button type="button" class="close-button" (click)="cancelForm()">✕</button>
+      </div>
+
+      <form (ngSubmit)="saveProject()">
+        <div class="form-grid">
+          <label>
+            Project title *
+            <input name="title" [(ngModel)]="form.title" required maxlength="150">
+          </label>
+
+          <label>
+            URL slug *
+            <input name="slug" [(ngModel)]="form.slug" required maxlength="150"
+                   placeholder="my-project">
+          </label>
+
+          <label class="full-width">
+            Short description *
+            <textarea name="shortDescription" [(ngModel)]="form.shortDescription"
+                      required maxlength="500" rows="2"></textarea>
+          </label>
+
+          <label class="full-width">
+            Full description
+            <textarea name="description" [(ngModel)]="form.description"
+                      rows="4"></textarea>
+          </label>
+
+          <label class="full-width">
+            Technologies (comma-separated)
+            <input name="technologies" [(ngModel)]="form.technologies"
+                   placeholder="Angular, .NET, SQL Server">
+          </label>
+
+          <label class="full-width">
+            Image URL
+            <input name="imageUrl" [(ngModel)]="form.imageUrl"
+                   placeholder="https://example.com/project-image.png">
+          </label>
+
+          <label>
+            GitHub URL
+            <input name="gitHubUrl" [(ngModel)]="form.gitHubUrl"
+                   placeholder="https://github.com/...">
+          </label>
+
+          <label>
+            Live demo URL
+            <input name="liveDemoUrl" [(ngModel)]="form.liveDemoUrl"
+                   placeholder="https://...">
+          </label>
+
+          <label>
+            Display order
+            <input type="number" name="displayOrder"
+                   [(ngModel)]="form.displayOrder" min="0">
+          </label>
+
+          <label class="publish-option">
+            <input type="checkbox" name="isPublished"
+                   [(ngModel)]="form.isPublished">
+            Publish on public portfolio
+          </label>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="secondary-button" (click)="cancelForm()">
+            Cancel
+          </button>
+          <button type="submit" class="primary-button" [disabled]="saving">
+            {{ saving ? 'Saving...' : (editingId === null ? 'Create Project' : 'Save Changes') }}
+          </button>
+        </div>
+      </form>
+    </section>
+  }
+
+  <section class="list-card">
+    <div class="list-heading">
+      <div>
+        <h2>All Projects</h2>
+        <p>{{ projects.length }} project(s) in your portfolio</p>
+      </div>
+      <button class="secondary-button" (click)="loadProjects()" [disabled]="loading">
+        Refresh
+      </button>
+    </div>
+
+    @if (loading) {
+      <div class="empty-state">Loading projects...</div>
+    } @else if (projects.length === 0) {
+      <div class="empty-state">
+        <h3>No projects yet</h3>
+        <p>Add your first project to get started.</p>
+        <button class="primary-button" (click)="addProject()">Add Project</button>
+      </div>
+    } @else {
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Project</th>
+              <th>Technologies</th>
+              <th>Visibility</th>
+              <th>Order</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (project of projects; track trackByProjectId($index, project)) {
+              <tr>
+                <td>
+                  <div class="project-info">
+                    @if (project.imageUrl) {
+                      <img [src]="project.imageUrl" [alt]="project.title">
+                    } @else {
+                      <div class="project-placeholder">P</div>
+                    }
+                    <div>
+                      <strong>{{ project.title }}</strong>
+                      <span>{{ project.slug }}</span>
+                      <small>{{ project.shortDescription }}</small>
+                    </div>
+                  </div>
+                </td>
+                <td>{{ project.technologies || '—' }}</td>
+                <td>
+                  <button
+                    class="status-pill"
+                    [class.published]="project.isPublished"
+                    [class.unpublished]="!project.isPublished"
+                    (click)="togglePublished(project)">
+                    {{ project.isPublished ? 'Published' : 'Unpublished' }}
+                  </button>
+                </td>
+                <td>{{ project.displayOrder }}</td>
+                <td>
+                  <div class="action-buttons">
+                    <button class="edit-button" (click)="editProject(project)">Edit</button>
+                    <button class="delete-button" (click)="deleteProject(project)">Delete</button>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </section>
+</div>

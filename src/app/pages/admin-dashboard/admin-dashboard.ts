@@ -5,6 +5,7 @@ import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-admin-dashboard',
+  standalone: true,
   imports: [RouterLink],
   templateUrl: './admin-dashboard.html',
   styleUrls: ['./admin-dashboard.scss']
@@ -15,6 +16,8 @@ export class AdminDashboard {
 
   readonly userName =
     sessionStorage.getItem('user_name') || 'Administrator';
+
+  readonly currentYear = new Date().getFullYear();
 
   logout(): void {
     this.authService.clearSession();

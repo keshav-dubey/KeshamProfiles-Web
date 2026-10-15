@@ -24,7 +24,6 @@ export interface AuthResponse {
   expiresAtUtc: string;
 }
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -53,11 +52,27 @@ export class AuthService {
     return sessionStorage.getItem('access_token');
   }
 
-  isAdminAuthenticated(): boolean {
-    const token = this.getToken();
-    const role = sessionStorage.getItem('user_role');
+  getRole(): string {
+    return (
+      sessionStorage.getItem('user_role') ?? ''
+    ).trim().toLowerCase();
+  }
 
-    return !!token && role?.toLowerCase() === 'admin';
+  isAuthenticated(): boolean {
+    return !!this.getToken();
+  }
+
+  isAdminAuthenticated(): boolean {
+    const adminRoles = [
+      'admin',
+      'administrator',
+      'superadmin'
+    ];
+
+    return (
+      this.isAuthenticated() &&
+      adminRoles.includes(this.getRole())
+    );
   }
 
   clearSession(): void {
